@@ -24,7 +24,7 @@ function Albums(props) {
     }
 
 
-    let url = 'https://fakestoreapi.com/products'
+    let url = 'https://faketoreapi.com/products'
     useEffect(() => {
         axios.get(url)
             //  .then(p=>console.log(p.data))
