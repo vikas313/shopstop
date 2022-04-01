@@ -1,38 +1,86 @@
 .App {
   text-align: center;
+  position: relative;
+  
+  
+  
+}
+*{
+  box-sizing: border-box;
+}
+.background{
+  background-image: url(./images/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 50rem;
+  position: absolute;
+  opacity: 0.8;
+  position: fixed;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media only screen and (max-width: 600px) {
+  .background{
+    background-image: url(./images/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    
+    position: absolute;
+    opacity: 0.8;
+    position: fixed;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.form{
+  text-align: center;
+}
+.Vikas{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 5px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+*{
+
+  margin: 0;
+  padding: 0;
+}
+.descset{
+  /* border: 1px dashed orange; */
+  padding: 1rem;
+  margin: 1rem;
+  width: 30rem;
+  height: 30rem;
+  text-align: center;
+  /* background-color: antiquewhite; */
+}
+
+
+@media only screen and (max-width: 700px) {
+  .Vikas{
+    display: grid;
+    grid-template-columns: auto ;
+    grid-gap: 5px;
+  }
+}
+
+
+.vikas{
+  /* border: 1px dashed orange; */
+  padding: 5px;
+  margin: 10px;
+  transform: 45deg;
+  height: 350px;
+}
+/* .vikas:hover {
+  height: 350px;
+} */
+.add-to-cart{
+  background-color: tomato;
+  width: 80%;
+  height: 10%;
   color: white;
+  text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
