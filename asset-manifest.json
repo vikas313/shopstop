@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/shopstop/static/css/main.1ae726eb.css",
+    "main.js": "/shopstop/static/js/main.a77bcbcb.js",
+    "static/js/787.23170c61.chunk.js": "/shopstop/static/js/787.23170c61.chunk.js",
+    "static/media/background.jpg": "/shopstop/static/media/background.75257bc9af64fa8c8827.jpg",
+    "index.html": "/shopstop/index.html",
+    "main.1ae726eb.css.map": "/shopstop/static/css/main.1ae726eb.css.map",
+    "main.a77bcbcb.js.map": "/shopstop/static/js/main.a77bcbcb.js.map",
+    "787.23170c61.chunk.js.map": "/shopstop/static/js/787.23170c61.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ae726eb.css",
+    "static/js/main.a77bcbcb.js"
+  ]
+}
