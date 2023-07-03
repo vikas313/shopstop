@@ -40,14 +40,14 @@ function Logedin(props) {
   return (
     <>
       <div className='header' >
-        <Appbar name={props.name} />
+        <Appbar name={props?.name} />
 
 
         <input type="text" placeholder='search products' />
 
         <button className='logout-button'
 
-          onClick={props.logout}
+          onClick={props?.logout}
         >Logout</button>
 
         <span className='cartlogo' onClick={showcartpros} >my cart<i class="uil uil-shopping-cart"></i>

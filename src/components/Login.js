@@ -1,100 +1,91 @@
-import {useState} from 'react'
-import Loginpagedata from './Loginpagedata';
+import { useState } from "react";
+import Loginpagedata from "./Loginpagedata";
+import { auth, googleProvider } from "../configs/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
-
-
-function Login(props){
-
-  const [data,setData] = useState({
-    name:'',
-    email:'',
-    mobile:'',
-    password:'',
-    vpassword:''
+function Login(props) {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
   });
-  const [error,seterror] = useState('');
-  const [iserror,setiserror] = useState(false);
-  
-  
-  const handlechange=(e)=>{
-    setData({...data,[e.target.name]:e.target.value})
+  const [error, seterror] = useState("");
+  const [iserror, setiserror] = useState(false);
+  const handlechange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const signIn = async () => {
+    setiserror(false);
+    try {
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      await props.setLogIn(true);
+    } catch (err) {
+      isError(err)
+    }
+  };
+  const logIn = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      await props.setLogIn(true);
+    } catch (err) {
+      isError(err)
+    }
+  };
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      await props.setLogIn(true);
+    } catch (err) {
+      isError(err)
+    }
+  };
+  const isError = (err)=>{
+    setiserror(true);
+      seterror(err.message.split(":")[1]);
   }
-
-  const handlesubmit=(e)=>{
-    e.preventDefault();
-    if(!data.name && !data.email && !data.password && !data.vpassword && !data.mobile){
-      setiserror(true);
-      seterror('all fields are required')
-    }
-    else if(data.name && data.name.length<5){
-      setiserror(true);
-      seterror('name length is too short')
-    }
-    else if(!data.email && data.email.includes('@')){
-      setiserror(true);
-      seterror('enter valid email')
-    }
-    else if(!data.mobile && data.mobile.length!==10){
-      setiserror(true);
-      seterror('enter valid mobile without country code')
-    }
-    else if(!data.password && data.password.length<6){
-      setiserror(true);
-      seterror('password should be atleast 6 chars');
-    }
-    else if(data.password!==data.vpassword){
-      setiserror(true);
-      seterror('passwords didnt match')
-    }
-    else{
-      setiserror(false);
-      localStorage.setItem("data",JSON.stringify(data));
-      seterror('');
-      props.store(data);
-     // props.loggedin(true)
-     
-    }
-    
-    console.log(data)
-      
-   
-  }
-  console.log('iam login.js')
- 
   return (
     <>
-     <div className='background' ></div>
-     <Loginpagedata/>
-     <div className='form' >
-    { <>
-      
-    <form onSubmit={handlesubmit} >
-    <label htmlFor="name" >Name:</label>
-    <input type='text' name='name'  placeholder='enter name' onChange={handlechange}  /> <br/><br/>
+      <Loginpagedata />
+      <div className="form">
+        {
+          <>
+            <div className="signups">
+              <div className="inputLabels">
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="enter mail"
+                  onChange={handlechange}
+                />
+              </div>
+              <div>
+                <label htmlFor="email">Password:</label>
+                <input
+                  type="text"
+                  name="password"
+                  placeholder="Enter password"
+                  onChange={handlechange}
+                />
+              </div>
+              <button onClick={signIn}>Sign up</button>
+            </div>
 
-    <label htmlFor="email" >Email:</label>
-    <input type='text' name='email' placeholder='enter mail' onChange={handlechange}/><br/><br/>
-
-    <label htmlFor="mobile" >Mobile:</label>
-    <input type='number' name='mobile' placeholder='enter mobile' onChange={handlechange}/><br/><br/>
-
-    <label htmlFor="password" >password:</label>
-    <input type='text' name='password' placeholder='enter password' onChange={handlechange}/><br/><br/>
-
-    <label htmlFor="vpassword" >Vpassword:</label>
-    <input type='text' name='vpassword' placeholder='verify password' onChange={handlechange}/><br/><br/>
-
-    <input type="submit" value={'Signup'}/>
-    </form>
-
-    {iserror ? error:null}
-   <div className='preaccount' >
-   <p>Allready have an account?</p>
-    <button onClick={props.login} >Login</button>
-   </div>
-    </>}
-    </div>
+            {iserror ? error : null}
+            <div className="preaccount">
+              <p>Allready have an account?</p>
+              <button onClick={logIn}>Login</button>
+            </div>
+            <div className="preaccount">
+              <button onClick={signInWithGoogle}>Sign in with GOOGLE</button>
+            </div>
+          </>
+        }
+      </div>
     </>
-  )
+  );
 }
 export default Login;

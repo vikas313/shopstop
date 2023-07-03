@@ -1,83 +1,62 @@
-import { useState } from 'react';
-import './App.css'
-import Directlogin from './components/Directlogin';
-import Logedin from './components/Logedin';
-import Login from './components/Login';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Directlogin from "./components/Directlogin";
+import Logedin from "./components/Logedin";
+import { auth } from "./configs/firebase";
+import { db } from "./configs/firebase";
+import { getDocs, collection } from "firebase/firestore";
+import Login from "./components/Login";
+import { signOut } from "firebase/auth";
 const App = () => {
-  // const [storage, setstorage] = useState(localStorage.getItem('data') || null);
-  const [storage, setstorage] = useState( null);
-
   const [login, setlogin] = useState(false);
+  const [products, setProducts] = useState([]);
+  const productsRef = collection(db, "products");
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const data = await getDocs(productsRef);
+        const filteredData = data.docs.map((doc=>({...doc.data(),id:doc.id})))
+        console.log(filteredData)
+        setProducts(filteredData)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getProducts()
+  },[]);
+  const handlelogout = async () => {
+    try {
+      await signOut(auth);
+      await setlogin(false);
+    } catch (err) {
+      alert(err);
+    }
+  };
 
-
-
-  const [loggedin, setloggedin] = useState(localStorage.getItem('logout') || null);
-
-
-  function local(fields) {
-    setstorage(fields);
-
-    console.log('executed')
-
-  }
-
-
-  // const [afterlogout, setafterlogout] = useState(false);
-
-  const handlelogout = () => {
-   // localStorage.setItem('logout', 'true');
-    // setafterlogout(true)
-    setstorage(null);
-    //localStorage.removeItem('data');
-
-  }
   // method for home page when localstaroge is true or not
   const handledirectlogin = () => {
-    console.log("clicked")
-    if (localStorage.getItem('data')) {
-      let pass = prompt(`enter password for ${ JSON.parse(localStorage.getItem('data')).name}`,'*********');
-      if( JSON.parse(localStorage.getItem('data')).password ==pass){
-      setstorage(localStorage.getItem('data'))
-      setlogin(true);
-      }else{
-        alert(`wrong password for account ${ JSON.parse(localStorage.getItem('data')).email}`)
-      }
-
-
-
-    }
-    else {
-      alert('you havent signed up')
-    }
-  }
+    // if (localStorage.getItem('data')) {
+    //   let pass = prompt(`enter password for ${ JSON.parse(localStorage.getItem('data')).name}`,'*********');
+    //   if( JSON.parse(localStorage.getItem('data')).password ==pass){
+    //   setstorage(localStorage.getItem('data'))
+    // setlogin(true);
+    //   }else{
+    //     alert(`wrong password for account ${ JSON.parse(localStorage.getItem('data')).email}`)
+    //   }
+    // }
+    // else {
+    //   alert('you havent signed up')
+    // }
+  };
 
   return (
-    // <>
-
-    //   {
-    //     !login ?
-    //       <div className="App" >
-    //         {!storage ? <Login store={local} login={handledirectlogin} /*logedin={setloggedin}*/ /> :
-    //           <>
-    //             {
-    //               !afterlogout ? <Logedin logout={handlelogout} /> : <Login login={handledirectlogin} />
-    //             }
-
-
-    //           </>
-    //         }
-
-
-    //       </div> :
-    //       <Directlogin />
-
-    //   }
-
-
-    // </>
-    <div className='App'>
-      {(!storage) ? <Login store={local} login={handledirectlogin} /*logedin={setloggedin}*/ /> : <Logedin logout={handlelogout} />}
+    <div className="App">
+      {!login ? (
+        <Login setLogIn={setlogin} login={handledirectlogin} />
+      ) : (
+        <Logedin logout={handlelogout} />
+      )}
     </div>
-  )
-}
+  );
+};
 export default App;

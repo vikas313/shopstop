@@ -121,24 +121,24 @@ background-color: #6E809C;
 
 
   .form{
-    position: relative;
-    left: 70%;
+     position: relative;
+   /* left: 70%;
     top: 13rem;
     
     width: 25%;
     height: 16rem;
-    box-shadow: 2px 2px 2px 10px wheat;
+    box-shadow: 2px 2px 2px 10px wheat; */
     
   }
   @media only screen and (max-width: 600px) {
     .form{
       position: relative;
-      left: 70%;
+      /* left: 70%;
       top: 13rem;
       
       width: 25%;
       height: 15rem;
-      box-shadow: 2px 2px 2px 10px wheat;
+      box-shadow: 2px 2px 2px 10px wheat; */
       
     }
   }
@@ -331,6 +331,11 @@ color: wheat;
    left: 38rem;
    width: 2rem;
    font-size: 2rem;
+ }
+
+ .signups{
+  display: flex;
+  flex-direction: column;
  }
 
  
